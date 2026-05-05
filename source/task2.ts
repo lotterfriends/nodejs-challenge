@@ -1,4 +1,4 @@
-import { createReadStream, existsSync, statSync, writeFileSync } from 'fs';
+import { createReadStream, existsSync, readFileSync, statSync, writeFileSync } from 'fs';
 import { Task } from './task.interface';
 
 export class Task2 implements Task {
@@ -9,7 +9,9 @@ export class Task2 implements Task {
 
     run(): void {
         if (existsSync(this.task2Result) && statSync(this.task2Result).size > 0) {
+            const result = readFileSync(this.task2Result, 'utf8').trim();
             console.log('Task2 result already exists:', this.task2Result);
+            console.log('Summe aller Ziffern:', result);
             return;
         }
 
