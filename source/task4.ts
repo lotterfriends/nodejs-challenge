@@ -14,6 +14,12 @@ export class Task4 implements Task {
             return;
         }
 
+        if (!existsSync(this.task1Result) || !(statSync(this.task1Result).size > 0)) {
+            console.log('Task4 result cannot be computed because Task1 result is missing or empty.');
+            process.exit(1);
+            return;
+        }
+
         const stream = createReadStream(this.task1Result, { encoding: 'utf8', highWaterMark: 64 * 1024 });
         const sentenceSums: number[] = [];
         let currentSum = 0;

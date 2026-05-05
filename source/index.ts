@@ -13,11 +13,6 @@ const task2Result = testing ? join(baseDir, 'output', 'testing-task2-result.txt'
 const task3Result = testing ? join(baseDir, 'output', 'testing-task3-result.txt') : join(baseDir, 'output', 'task3-result.txt');
 const task4aResult = testing ? join(baseDir, 'output', 'testing-task4a-result.json') : join(baseDir, 'output', 'task4a-result.json');
 
-console.log(task1Result);
-console.log(task2Result);
-console.log(task3Result);
-console.log(task4aResult);
-
 async function main() {
     const task1 = new Task1(baseDir, task1Result);
     await task1.run();

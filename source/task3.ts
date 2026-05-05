@@ -14,6 +14,12 @@ export class Task3 implements Task {
             return;
         }
         
+        if (!existsSync(this.task1Result) || !(statSync(this.task1Result).size > 0)) {
+            console.log('Task3 result cannot be computed because Task1 result is missing or empty.');
+            process.exit(1);
+            return;
+        }
+
         if (!existsSync(this.task2Result) || !(statSync(this.task2Result).size > 0)) {
             console.log('Task3 result cannot be computed because Task2 result is missing or empty.');
             process.exit(1);
