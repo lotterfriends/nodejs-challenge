@@ -1,6 +1,6 @@
 import { createDecipheriv } from 'crypto';
-import { readFileSync, createWriteStream } from 'fs';
-import { join } from 'path';
+import { readFileSync, createWriteStream, mkdirSync } from 'fs';
+import { join, dirname } from 'path';
 import { createGunzip } from 'zlib';
 import { Readable } from 'stream';
 import { pipeline } from 'stream/promises';
@@ -31,6 +31,7 @@ export class Task1 extends BaseTask {
     }
 
     private async decompress(decrypted: Buffer): Promise<void> {
+      mkdirSync(dirname(this.task1Result), { recursive: true });
       const gunzip = createGunzip();
       const source = Readable.from(decrypted);
       const dest = createWriteStream(this.task1Result);
