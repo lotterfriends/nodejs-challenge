@@ -13,6 +13,8 @@
     "build-source": "node node_modules/typescript/bin/tsc -p source/tsconfig.json",
     "build-source-watch": "node node_modules/typescript/bin/tsc -w -p source/tsconfig.json",
     "build-source-debug": "node node_modules/typescript/bin/tsc -p source/tsconfig.debug.json",
-    "build-source-debug-watch": "node node_modules/typescript/bin/tsc -w -p source/tsconfig.debug.json"
+    "build-source-debug-watch": "node node_modules/typescript/bin/tsc -w -p source/tsconfig.debug.json",
+    "cleanup": "rm -rf output/* && rm -rf source/dist/*",
+    "cleanup:testing": "rm -rf output/testing*"
   }
 }
