@@ -10,6 +10,7 @@
   },
   "scripts": {
     "start": "node source/dist/index.js",
+    "start:testing": "TESTING=true node source/dist/index.js",
     "serve": "node source/dist/task4c.js",
     "test": "node --test source/dist/test/*.test.js",
     "build-source": "node node_modules/typescript/bin/tsc -p source/tsconfig.json",

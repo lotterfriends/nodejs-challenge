@@ -5,7 +5,7 @@ import { Task3 } from './task3';
 import { Task4a } from './task4a';
 import { Task4b } from './task4b';
 
-const testing = false; // Setze auf true für Testing mit clear_smaller.txt
+const testing = process.env.TESTING === 'true'; // set to true for testing with clear_smaller.txt
 
 const baseDir = join(__dirname, '..', '..');
 
