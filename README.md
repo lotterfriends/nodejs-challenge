@@ -1,3 +1,20 @@
+# Anweisung
+
+## Setup
+```bash
+npm i
+npm run build-source
+```
+
+## Kommandos
+
+- Alle Aufgaben 1x ausführen/lösen `npm start`
+- Alles mit der kleineren Datei ausführen: `start:testing`
+- Webserver starten (Nachdem npm start durchgelaufen ist): `npm run serve`
+- Unit-Tests ausführen: `npm test`
+- Output-Dateien und kompilierten Code löschen: `npm run cleanup`
+- Output-Test-Dateien löschen: `npm run cleanup:testing`
+
 # nodejs-challenge
 ## Code Name RED
 
