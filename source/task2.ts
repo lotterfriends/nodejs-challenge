@@ -22,7 +22,7 @@ export class Task2 extends BaseTask {
         if (this.resultExists(this.task2Result)) {
             const result = this.readResult(this.task2Result);
             console.log('Task2 result already exists:', this.task2Result);
-            console.log('Summe aller Ziffern:', result);
+            console.log('Sum of all digits:', result);
             return;
         }
 
@@ -34,6 +34,6 @@ export class Task2 extends BaseTask {
         });
 
         this.writeResult(this.task2Result, String(sum));
-        console.log('Summe aller Ziffern:', sum);
+        console.log('Sum of all digits:', sum);
     }
 }

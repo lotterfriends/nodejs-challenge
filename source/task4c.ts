@@ -23,7 +23,7 @@ const server = createServer(options, (req, res) => {
 
     if (!existsSync(filePath)) {
         res.writeHead(503, { 'Content-Type': 'text/plain' });
-        res.end(`Die Datei ${fileName} existiert noch nicht. Bitte zuerst "npm start" ausführen.`);
+        res.end(`File ${fileName} does not exist yet. Please run "npm start" first.`);
         return;
     }
 
@@ -34,6 +34,6 @@ const server = createServer(options, (req, res) => {
 
 const PORT = 3443;
 server.listen(PORT, () => {
-    console.log(`HTTPS Server laeuft auf https://localhost:${PORT}`);
+    console.log(`HTTPS server running on https://localhost:${PORT}`);
     console.log(`Mit testing: https://localhost:${PORT}?testing`);
 });

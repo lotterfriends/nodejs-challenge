@@ -16,7 +16,7 @@ export class Task4b extends BaseTask {
         if (this.resultExists(this.task4bResult)) {
             const result = this.readResult(this.task4bResult);
             console.log('Task4b result already exists:', this.task4bResult);
-            console.log('Task4b Ergebnis:', result);
+            console.log('Task4b result:', result);
             return;
         }
 
@@ -29,6 +29,6 @@ export class Task4b extends BaseTask {
 
         const solution = this.decodeCharCodes(parsed);
         this.writeResult(this.task4bResult, solution);
-        console.log('Task4b Ergebnis:', solution);
+        console.log('Task4b result:', solution);
     }
 }

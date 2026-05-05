@@ -31,7 +31,7 @@ export class Task4a extends BaseTask {
         if (this.resultExists(this.task4aResult)) {
             const result = this.readResult(this.task4aResult);
             console.log('Task4a result already exists:', this.task4aResult);
-            console.log('Task4a Ergebnis:', result);
+            console.log('Task4a result:', result);
             return;
         }
 
@@ -49,6 +49,6 @@ export class Task4a extends BaseTask {
 
         const result = this.findTop10InOrder(state.sums);
         this.writeResult(this.task4aResult, JSON.stringify(result));
-        console.log('Task4a Ergebnis:', JSON.stringify(result));
+        console.log('Task4a result:', JSON.stringify(result));
     }
 }

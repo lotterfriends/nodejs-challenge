@@ -27,7 +27,7 @@ export class Task3 extends BaseTask {
         if (this.resultExists(this.task3Result)) {
             const result = this.readResult(this.task3Result);
             console.log('Task3 result already exists:', this.task3Result);
-            console.log('Task3 Ergebnis (Summe Ziffern + Vokale):', result);
+            console.log('Task3 result (sum of digits + vowels):', result);
             return;
         }
 
@@ -43,6 +43,6 @@ export class Task3 extends BaseTask {
 
         const total = task2Sum + vowelSum;
         this.writeResult(this.task3Result, String(total));
-        console.log('Task3 Ergebnis (Summe Ziffern + Vokale):', total);
+        console.log('Task3 result (sum of digits + vowels):', total);
     }
 }
