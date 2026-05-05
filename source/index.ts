@@ -2,7 +2,7 @@ import { join } from 'path';
 import { Task1 } from './task1';
 import { Task2 } from './task2';
 import { Task3 } from './task3';
-import { Task4 } from './task4';
+import { Task4a } from './task4a';
 
 const testing = true;
 
@@ -23,8 +23,8 @@ async function main() {
     const task3 = new Task3(task1Result, task2Result, task3Result);
     await task3.run();
 
-    const task4 = new Task4(task1Result, task4aResult);
-    await task4.run();
+    const task4a = new Task4a(task1Result, task4aResult);
+    await task4a.run();
 }
 
 main();

@@ -1,7 +1,7 @@
 import { createReadStream, existsSync, readFileSync, statSync, writeFileSync } from 'fs';
 import { Task } from './task.interface';
 
-export class Task4 implements Task {
+export class Task4a implements Task {
 
     constructor(private task1Result: string, private task4aResult: string) {
     }
