@@ -5,15 +5,15 @@ import { Task3 } from './task3';
 import { Task4a } from './task4a';
 import { Task4b } from './task4b';
 
-const testing = false;
+const testing = false; // Setze auf true für Testing mit clear_smaller.txt
 
 const baseDir = join(__dirname, '..', '..');
 
 const task1Result = testing ? join(baseDir, 'clear_smaller.txt') : join(baseDir, 'output', 'task1-result.txt');
-const task2Result = testing ? join(baseDir, 'output', 'testing-task2-result.txt') : join(baseDir, 'output', 'task2-result.txt');
-const task3Result = testing ? join(baseDir, 'output', 'testing-task3-result.txt') : join(baseDir, 'output', 'task3-result.txt');
-const task4aResult = testing ? join(baseDir, 'output', 'testing-task4a-result.json') : join(baseDir, 'output', 'task4a-result.json');
-const task4bResult = testing ? join(baseDir, 'output', 'testing-task4b-result.txt') : join(baseDir, 'output', 'task4b-result.txt');
+const task2Result = join(baseDir, 'output', `${testing ? 'testing-' : ''}task2-result.txt`);
+const task3Result = join(baseDir, 'output', `${testing ? 'testing-' : ''}task3-result.txt`);
+const task4aResult = join(baseDir, 'output', `${testing ? 'testing-' : ''}task4a-result.json`);
+const task4bResult = join(baseDir, 'output', `${testing ? 'testing-' : ''}task4b-result.txt`);
 
 async function main() {
     const task1 = new Task1(baseDir, task1Result);

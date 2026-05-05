@@ -1,42 +1,39 @@
-import { createReadStream, existsSync, readFileSync, statSync, writeFileSync } from 'fs';
-import { Task } from './task.interface';
+import { BaseTask } from './base-task';
 
-export class Task2 implements Task {
+export class Task2 extends BaseTask {
 
+    protected taskName = 'Task2';
 
     constructor(private task1Result: string, private task2Result: string) {
+        super();
+    }
+
+    private sumDigits(chunk: string): number {
+        let sum = 0;
+        for (const ch of chunk) {
+            if (ch >= '0' && ch <= '9') {
+                sum += ch.charCodeAt(0) - 48;
+            }
+        }
+        return sum;
     }
 
     async run(): Promise<void> {
-        if (existsSync(this.task2Result) && statSync(this.task2Result).size > 0) {
-            const result = readFileSync(this.task2Result, 'utf8').trim();
+        if (this.resultExists(this.task2Result)) {
+            const result = this.readResult(this.task2Result);
             console.log('Task2 result already exists:', this.task2Result);
             console.log('Summe aller Ziffern:', result);
             return;
         }
-        
-        const stream = createReadStream(this.task1Result, { encoding: 'utf8', highWaterMark: 64 * 1024 });
+
+        this.checkDependency(this.task1Result, 'Task1');
+
         let sum = 0;
-        
-        await new Promise<void>((resolve, reject) => {
-            stream.on('data', (chunk: string) => {
-                for (const ch of chunk) {
-                    if (ch >= '0' && ch <= '9') {
-                        sum += ch.charCodeAt(0) - 48;
-                    }
-                }
-            });
-
-            stream.on('end', () => {
-                writeFileSync(this.task2Result, String(sum), 'utf8');
-                console.log('Summe aller Ziffern:', sum);
-                resolve();
-            });
-
-            stream.on('error', (err) => {
-                console.error('Error reading file:', err);
-                reject(err);
-            });
+        await this.streamFile(this.task1Result, (chunk) => {
+            sum += this.sumDigits(chunk);
         });
+
+        this.writeResult(this.task2Result, String(sum));
+        console.log('Summe aller Ziffern:', sum);
     }
 }
