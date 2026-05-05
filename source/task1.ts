@@ -1,17 +1,16 @@
 import { createDecipheriv } from 'crypto';
-import { readFileSync, createWriteStream } from 'fs';
+import { readFileSync, createWriteStream, existsSync, statSync } from 'fs';
 import { join } from 'path';
 import { createGunzip } from 'zlib';
 import { Readable } from 'stream';
 import { pipeline } from 'stream/promises';
+import { Task } from './task.interface';
 
 
-export class Task1 {
+export class Task1 implements Task {
 
-    private dir: string;
 
-    constructor(dir: string)  {
-      this.dir = dir;
+    constructor(private dir: string, private task1Result: string) {
     } 
   
     private decryp() {
@@ -33,14 +32,13 @@ export class Task1 {
 
     private extract(decrypted: Buffer<ArrayBuffer>) {
       // GZIP-Dateien müssen per Streaming entpackt werden um  die große Datei verarbeiten zu können
-      const outputPath = join(this.dir, 'output.txt');
       const gunzip = createGunzip();
       const source = Readable.from(decrypted);
-      const dest = createWriteStream(outputPath);
+      const dest = createWriteStream(this.task1Result);
 
-      console.log('Decompressing to', outputPath, '...');
+      console.log('Decompressing to', this.task1Result, '...');
       pipeline(source, gunzip, dest).then(() => {
-        console.log('Decompression complete:', outputPath);
+        console.log('Decompression complete:', this.task1Result);
       }).catch((err) => {
         console.error('Decompression failed:', err);
       });
@@ -48,7 +46,11 @@ export class Task1 {
     }
 
     public run(): void {
-        const decrypted = this.decryp();
-        this.extract(decrypted);
+      if (existsSync(this.task1Result) && statSync(this.task1Result).size > 0) {
+        console.log('Output file already exists:', this.task1Result);
+        return;
+      }
+      const decrypted = this.decryp();
+      this.extract(decrypted);
     }
 }
