@@ -30,27 +30,23 @@ export class Task1 implements Task {
       return decrypted;
     }
 
-    private extract(decrypted: Buffer<ArrayBuffer>) {
+    private async extract(decrypted: Buffer<ArrayBuffer>) {
       // GZIP-Dateien müssen per Streaming entpackt werden um  die große Datei verarbeiten zu können
       const gunzip = createGunzip();
       const source = Readable.from(decrypted);
       const dest = createWriteStream(this.task1Result);
 
       console.log('Decompressing to', this.task1Result, '...');
-      pipeline(source, gunzip, dest).then(() => {
-        console.log('Decompression complete:', this.task1Result);
-      }).catch((err) => {
-        console.error('Decompression failed:', err);
-      });
-
+      await pipeline(source, gunzip, dest);
+      console.log('Decompression complete:', this.task1Result);
     }
 
-    public run(): void {
+    public async run(): Promise<void> {
       if (existsSync(this.task1Result) && statSync(this.task1Result).size > 0) {
         console.log('Output file already exists:', this.task1Result);
         return;
       }
       const decrypted = this.decryp();
-      this.extract(decrypted);
+      await this.extract(decrypted);
     }
 }

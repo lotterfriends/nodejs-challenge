@@ -6,11 +6,17 @@ export class Task3 implements Task {
     constructor(private task1Result: string, private task2Result: string, private task3Result: string) {
     }
 
-    run(): void {
+    async run(): Promise<void> {
         if (existsSync(this.task3Result) && statSync(this.task3Result).size > 0) {
             const result = readFileSync(this.task3Result, 'utf8').trim();
             console.log('Task3 result already exists:', this.task3Result);
             console.log('Task3 Ergebnis (Summe Ziffern + Vokale):', result);
+            return;
+        }
+        
+        if (!existsSync(this.task2Result) || !(statSync(this.task2Result).size > 0)) {
+            console.log('Task3 result cannot be computed because Task2 result is missing or empty.');
+            process.exit(1);
             return;
         }
 
@@ -22,23 +28,27 @@ export class Task3 implements Task {
         const stream = createReadStream(this.task1Result, { encoding: 'utf8', highWaterMark: 64 * 1024 });
         let vowelSum = 0;
 
-        stream.on('data', (chunk: string) => {
-            for (const ch of chunk) {
-                const lower = ch.toLowerCase();
-                if (lower in vowelValues) {
-                    vowelSum += vowelValues[lower];
+        await new Promise<void>((resolve, reject) => {
+            stream.on('data', (chunk: string) => {
+                for (const ch of chunk) {
+                    const lower = ch.toLowerCase();
+                    if (lower in vowelValues) {
+                        vowelSum += vowelValues[lower];
+                    }
                 }
-            }
-        });
+            });
 
-        stream.on('end', () => {
-            const total = task2Sum + vowelSum;
-            writeFileSync(this.task3Result, String(total), 'utf8');
-            console.log('Task3 Ergebnis (Summe Ziffern + Vokale):', total);
-        });
+            stream.on('end', () => {
+                const total = task2Sum + vowelSum;
+                writeFileSync(this.task3Result, String(total), 'utf8');
+                console.log('Task3 Ergebnis (Summe Ziffern + Vokale):', total);
+                resolve();
+            });
 
-        stream.on('error', (err) => {
-            console.error('Error reading file:', err);
+            stream.on('error', (err) => {
+                console.error('Error reading file:', err);
+                reject(err);
+            });
         });
     }
 }
